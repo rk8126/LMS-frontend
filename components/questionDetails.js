@@ -33,6 +33,14 @@ export default function QuestionDetails({ testId }) {
       const questionDetails = await startTest(testId);
       setCurrentQuestion(questionDetails?.data);
     } catch (error) {
+      if(error?.data?.message == "Unauthorized"){
+        router.push("/login");
+        return null;
+      }
+      if(error?.data?.message == "Test has been completed"){
+        router.push("/message");
+        return null;
+      }
       alert(error?.data?.message);
     }
   }
@@ -46,6 +54,14 @@ export default function QuestionDetails({ testId }) {
       }
       setCurrentSubmittedId(questionId);
     } catch (error) {
+      if(error?.data?.message == "Unauthorized"){
+        router.push("/login");
+        return null;
+      }
+      if(error?.data?.message == "Test has been completed"){
+        router.push("/message");
+        return null;
+      }
       alert(error?.data?.message);
     }
   }
@@ -56,9 +72,15 @@ export default function QuestionDetails({ testId }) {
       const questionDetails = await getNextQuestion({ testId });
       setCurrentQuestion(questionDetails?.data);
     } catch (error) {
+      if(error?.data?.message == "Unauthorized"){
+        router.push("/login");
+        return null;
+      }
+      if(error?.data?.message == "Test has been completed"){
+        router.push("/message");
+        return null;
+      }
       alert(error?.data?.message);
-      router.push("/message");
-      return;
     }
   }
 
